@@ -5,11 +5,11 @@ class symptPathoEntity
     private $_idP;
     private $_aggr;
 
-    public function __construct($idK, $idS)
+    public function __construct($idK, $idS, $aggr)
     {
         $this->setIdS($idK);
         $this->setIdP($idS);
-        $this->setAggr($idS);
+        $this->setAggr($aggr);
     }
 
     public function getIdS()

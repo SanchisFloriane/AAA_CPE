@@ -4,7 +4,7 @@ class symptomeEntity
     private $_idS;
     private $_desc;
 
-    public function __construct($idS,$desc)
+    public function __construct($idS, $desc)
     {
         $this->setIdS($idS);
         $this->setDesc($desc);

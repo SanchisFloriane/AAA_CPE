@@ -1,34 +1,32 @@
 <?php
 class meridienEntityManager extends EntityManager
 {
-    public function __construct($db)
+    public function __construct()
     {
-        $this->setDb($db);
+        parent::__construct();
     }
 
     public function add(meridienEntity $meridien)
     {
-        $q = $this->getDb()->prepare('INSERT INTO meridien(code, nom, element, yin) VALUES(:code, :nom, :element, :yin)');
-
-        $q->bindValue(':code', $meridien->getCode());
-        $q->bindValue(':nom', $meridien->getNom());
-        $q->bindValue(':element', $meridien->getElement());
-        $q->bindValue(':yin', $meridien->getYin(), PDO::PARAM_INT);
-
-        $q->execute();
+        $sql = "INSERT INTO meridien(`code`, `nom`, `element`, `yin`) VALUES(?, ?, ?, ?)";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($meridien->getCode(), $meridien->getNom(), $meridien->getElement(),$meridien->getYin()));
     }
 
     public function delete(meridienEntity $meridien)
     {
-        $this->getDb()->exec('DELETE FROM meridien WHERE code = '. $meridien->getCode());
+        $sql = "DELETE FROM meridien WHERE code = ?";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($meridien->getCode()));
     }
 
     public function get($code)
     {
         $q = $this->getDb()->query('SELECT code, nom, element, yin FROM meridien WHERE code = '. $code);
-        $donnees = $q->fetch(PDO::FETCH_ASSOC);
-
-        return new meridienEntity($donnees);
+        while ($donnees = $q->fetch())
+        {
+            return new meridienEntity($donnees['code'], $donnees['nom'], $donnees['element'],$donnees['yin']);
+        }
     }
 
     public function getList()
@@ -39,7 +37,7 @@ class meridienEntityManager extends EntityManager
 
         while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
         {
-            $meridiens[] = new meridienEntity($donnees);
+            $meridiens[] = new meridienEntity($donnees['code'], $donnees['nom'], $donnees['element'],$donnees['yin']);
         }
 
         return $meridiens;
@@ -47,13 +45,8 @@ class meridienEntityManager extends EntityManager
 
     public function update(meridienEntity $meridien)
     {
-        $q = $this->getDb()->prepare('UPDATE meridien SET nom= :nom , element= :element , yin = :yin WHERE code = :code');
-
-        $q->bindValue(':idS', $meridien->getCode());
-        $q->bindValue(':desc', $meridien->getNom());
-        $q->bindValue(':desc', $meridien->getElement());
-        $q->bindValue(':idS', $meridien->getYin(), PDO::PARAM_INT);
-
-        $q->execute();
+        $sql = "UPDATE patho SET `nom`=?, `element` =?, `yin`=? WHERE `code`= ?";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute([$meridien->getNom(), $meridien->getElement(), $meridien->getYin(), $meridien->getCode()]);
     }
 }

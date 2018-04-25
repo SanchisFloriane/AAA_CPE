@@ -1,45 +1,46 @@
 <?php
 class keyWordsEntityManager extends EntityManager
 {
-    public function __construct($db)
+    public function __construct()
     {
-        $this->setDb($db);
+        parent::__construct();
     }
 
     public function add(keyWordsEntity $keyWords)
     {
-        $q = $this->getDb()->prepare('INSERT INTO keywords(idK, name) VALUES(:idK, :name)');
-
-        $q->bindValue(':idK', $keyWords->getIdK(), PDO::PARAM_INT);
-        $q->bindValue(':name', $keyWords->getName());
-
-        $q->execute();
+        $sql = "INSERT INTO keywords(`idK`, `name`) VALUES(?, ?)";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($keyWords->getIdK(), $keyWords->getName()));
     }
 
     public function delete(keyWordsEntity $keyWords)
     {
-        $this->getDb()->exec('DELETE FROM keywords WHERE idK = '. $keyWords->getIdK());
+        $sql = "DELETE FROM keywords WHERE idK = ?";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($keyWords->getIdK()));
     }
 
     public function get($idK)
     {
         $idK = (int) $idK;
 
-        $q = $this->getDb()->query('SELECT idK, name FROM keywords WHERE idK = '.$idK);
-        $donnees = $q->fetch(PDO::FETCH_ASSOC);
-
-        return new keyWordsEntity($donnees);
+        $q = $this->getDb()->query('SELECT idK, name FROM keywords WHERE idP = '.$idK);
+        while ($donnees = $q->fetch())
+        {
+            return new keyWordsEntity($donnees['idK'], $donnees['name']);
+        }
     }
 
     public function getList()
     {
         $keyWordss = [];
 
+
         $q = $this->getDb()->query('SELECT idK, name FROM keywords ORDER BY name');
 
         while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
         {
-            $keyWordss[] = new keyWordsEntity($donnees);
+            $keyWordss[] = new keyWordsEntity($donnees['idK'], $donnees['name']);
         }
 
         return $keyWordss;
@@ -47,11 +48,8 @@ class keyWordsEntityManager extends EntityManager
 
     public function update(keyWordsEntity $keyWords)
     {
-        $q = $this->getDb()->prepare('UPDATE keywords SET name = :name  WHERE idK = :idK');
-
-        $q->bindValue(':idK', $keyWords->getIdK(), PDO::PARAM_INT);
-        $q->bindValue(':name', $keyWords->getName());
-
-        $q->execute();
+        $sql = "UPDATE keywords SET `name`=? WHERE `idK`= ?";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute([$keyWords->getName(),$keyWords->getIdK()]);
     }
 }

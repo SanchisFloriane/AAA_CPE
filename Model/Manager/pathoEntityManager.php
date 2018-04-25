@@ -1,25 +1,23 @@
 <?php
 class pathoEntityManager extends EntityManager
 {
-    public function __construct($db)
+    public function __construct()
     {
-        $this->setDb($db);
+        parent::__construct();
     }
 
     public function add(pathoEntity $patho)
     {
-        $q = $this->getDb()->prepare('INSERT INTO patho(mer, type, "desc") VALUES(:mer, :type, :desc)');
-
-        $q->bindValue(':mer', $patho->getMer());
-        $q->bindValue(':type', $patho->getType());
-        $q->bindValue(':desc', $patho->getDesc());
-
-        $q->execute();
+        $sql = "INSERT INTO patho(`mer`, `type`, `desc`) VALUES(?, ?, ?)";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($patho->getMer(), $patho->getType(), $patho->getDesc()));
     }
 
     public function delete(pathoEntity $patho)
     {
-        $this->getDb()->exec('DELETE FROM patho WHERE idP = '.$patho->getIdP());
+        $sql = "DELETE FROM patho WHERE idP = ?";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($patho->getIdP()));
     }
 
     public function get($idP)
@@ -27,9 +25,10 @@ class pathoEntityManager extends EntityManager
         $idP = (int) $idP;
 
         $q = $this->getDb()->query('SELECT idP, mer, type, "desc" FROM patho WHERE idP = '.$idP);
-        $donnees = $q->fetch(PDO::FETCH_ASSOC);
-
-        return new pathoEntity($donnees);
+        while ($donnees = $q->fetch())
+        {
+            return new pathoEntity($donnees['idP'], $donnees['mer'], $donnees['type'],$donnees['desc']);
+        }
     }
 
     public function getList()
@@ -40,7 +39,7 @@ class pathoEntityManager extends EntityManager
 
         while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
         {
-            $pathos[] = new pathoEntity($donnees);
+            $pathos[] = new pathoEntity($donnees['idP'], $donnees['mer'], $donnees['type'],$donnees['desc']);
         }
 
         return $pathos;
@@ -48,13 +47,8 @@ class pathoEntityManager extends EntityManager
 
     public function update(pathoEntity $patho)
     {
-        $q = $this->getDb()->prepare('UPDATE patho SET mer = :mer, type = :type, "desc" = :desc WHERE idP = :idP');
-
-        $q->bindValue(':idP', $patho->getIdP(), PDO::PARAM_INT);
-        $q->bindValue(':mer', $patho->getMer());
-        $q->bindValue(':type', $patho->getType());
-        $q->bindValue(':desc', $patho->getDesc());
-
-        $q->execute();
+        $sql = "UPDATE patho SET `mer`=?, `type` =?, `desc`=? WHERE `idP`= ?";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute([$patho->getMer(), $patho->getType(), $patho->getDesc(), $patho->getIdP()]);
     }
 }

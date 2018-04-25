@@ -3,34 +3,33 @@ class symptPathoEntityManager extends EntityManager
 { 
     public function __construct($db)
     {
-        $this->setDb($db);
+        parent::__construct();
     }
 
     public function add(symptPathoEntity $symptPatho)
     {
-        $q = $this->getDb()->prepare('INSERT INTO symptpatho(idS, idP, aggr) VALUES(:idS, :idP, :aggr)');
-
-        $q->bindValue(':idS', $symptPatho->getIdS(), PDO::PARAM_INT);
-        $q->bindValue(':idP', $symptPatho->getIdP(), PDO::PARAM_INT);
-        $q->bindValue(':aggr', $symptPatho->getAggr(), PDO::PARAM_INT);
-
-        $q->execute();
+        $sql = "INSERT INTO symptpatho(`idS`, `idP`, `aggr`) VALUES(?, ?, ?)";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($symptPatho->getIdS(), $symptPatho->getIdP(), $symptPatho->getAggr()));
     }
 
     public function delete(symptPathoEntity $symptPatho)
     {
-        $this->getDb()->exec('DELETE FROM symptpatho WHERE idP = '.$symptPatho->getIdP() .' and idS = '. $symptPatho->getIdS());
+        $sql = "DELETE FROM symptpatho WHERE idP = ? and idS";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($symptPatho->getIdP(), $symptPatho->getIdS()));
     }
 
-           public function get($idP, $idS)
+    public function get($idP, $idS)
     {
         $idP = (int) $idP;
         $idS = (int) $idS;
 
-        $q = $this->getDb()->query('SELECT idP, idS, aggr FROM symptpatho WHERE idP = '.$idP.' and idS = '. $idS);
-        $donnees = $q->fetch(PDO::FETCH_ASSOC);
-
-        return new symptPathoEntity($donnees);
+        $q = $this->getDb()->query('SELECT idP, idS, aggr FROM patho WHERE idP = '.$idP.' and idS = '. $idS);
+        while ($donnees = $q->fetch())
+        {
+            return new symptPathoEntity($donnees['idP'], $donnees['idS'], $donnees['aggr']);
+        }
     }
 
     public function getList()
@@ -41,7 +40,7 @@ class symptPathoEntityManager extends EntityManager
 
         while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
         {
-            $symptPathos[] = new symptPathoEntity($donnees);
+            $symptPathos[] = new symptPathoEntity($donnees['idP'], $donnees['idS'], $donnees['aggr']);
         }
 
         return $symptPathos;
@@ -49,12 +48,8 @@ class symptPathoEntityManager extends EntityManager
 
     public function update(symptPathoEntity $symptPatho)
     {
-        $q = $this->getDb()->prepare('UPDATE symptpatho SET aggr = :aggr WHERE idP = :idP and idS = :idS');
-
-        $q->bindValue(':idP', $symptPatho->getIdP(), PDO::PARAM_INT);
-        $q->bindValue(':idS', $symptPatho->getIdS(), PDO::PARAM_INT);
-        $q->bindValue(':aggr', $symptPatho->getAggr(), PDO::PARAM_INT);
-
-        $q->execute();
+        $sql = "UPDATE symptpatho SET `aggr`=? WHERE `idP`= ? and `idS` = ?";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute([$symptPatho->getAggr(), $symptPatho->getIdP(), $symptPatho->getIdS()]);
     }
 }

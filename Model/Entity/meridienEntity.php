@@ -6,12 +6,12 @@ class meridienEntity
     private $_element;
     private $_yin;
 
-    public function __construct($idK, $idS)
+    public function __construct($code, $nom, $element, $yin)
     {
-        $this->setCode($idK);
-        $this->setNom($idS);
-        $this->setElement($idS);
-        $this->setYin($idS);
+        $this->setCode($code);
+        $this->setNom($nom);
+        $this->setElement($element);
+        $this->setYin($yin);
     }
 
     public function getCode()

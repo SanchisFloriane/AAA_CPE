@@ -3,9 +3,17 @@ class EntityManager
 {
     private $_db; // Instance de PDO
 
-    public function setDb(PDO $db)
+    public function __construct()
     {
-        $this->_db = new PDO('mysql:host=localhost;dbname=AAA', 'root', '');
+        try
+        {
+            $this->_db = new PDO('mysql:host=localhost;dbname=aaa;charset=utf8', 'root', '');
+            echo 'BDD Connectée';
+        }
+        catch (Exception $e)
+        {
+            die('Erreur : ' . $e->getMessage());
+        }
     }
 
     public function getDb()

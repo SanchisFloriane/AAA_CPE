@@ -3,32 +3,32 @@ class symptomeEntityManager  extends EntityManager
 {
     public function __construct($db)
     {
-        $this->setDb($db);
+        parent::__construct();
     }
 
     public function add(symptomeEntity $symptome)
     {
-        $q = $this->getDb()->prepare('INSERT INTO symptome(idS, "desc") VALUES(:idS, :desc)');
-
-        $q->bindValue(':idS', $symptome->getIdS(), PDO::PARAM_INT);
-        $q->bindValue(':desc', $symptome->getDesc());
-
-        $q->execute();
+        $sql = "INSERT INTO symptome(`idS`, `desc`) VALUES(?, ?)";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array( $symptome->getIdS(), $symptome->getDesc()));
     }
 
     public function delete(symptomeEntity $symptome)
     {
-        $this->getDb()->exec('DELETE FROM symptome WHERE idS = '. $symptome->getIdS());
+        $sql = "DELETE FROM symptome WHERE idP = ?";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($symptome->getIdS()));
     }
 
     public function get($idS)
     {
         $idS = (int) $idS;
 
-        $q = $this->getDb()->query('SELECT idS, "desc" FROM symptome WHERE idS = '. $idS);
-        $donnees = $q->fetch(PDO::FETCH_ASSOC);
-
-        return new symptomeEntity($donnees);
+        $q = $this->getDb()->query('SELECT idS, "desc" FROM symptome WHERE idS = '.idS);
+        while ($donnees = $q->fetch())
+        {
+            return new symptomeEntity($donnees['idS'], $donnees['desc']);
+        }
     }
 
     public function getList()
@@ -39,7 +39,7 @@ class symptomeEntityManager  extends EntityManager
 
         while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
         {
-            $symptomes[] = new symptomeEntity($donnees);
+            $symptomes[] =  new pathoEntity($donnees['idS'], $donnees['desc']);
         }
 
         return $symptomes;
@@ -47,11 +47,8 @@ class symptomeEntityManager  extends EntityManager
 
     public function update(symptomeEntity $symptome)
     {
-        $q = $this->getDb()->prepare('UPDATE symptome SET "desc" = :aggr WHERE idS = :idS');
-
-        $q->bindValue(':idS', $symptome->getIdS(), PDO::PARAM_INT);
-        $q->bindValue(':desc', $symptome->getDesc());
-
-        $q->execute();
+        $sql = "UPDATE symptome SET `desc`=? WHERE `idS`= ?";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute([$symptome->getDesc(), $symptome->getIdS()]);
     }
 }

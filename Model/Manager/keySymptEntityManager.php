@@ -1,24 +1,23 @@
 <?php
 class keySymptEntityManager extends EntityManager
 {
-    public function __construct($db)
+    public function __construct()
     {
-        $this->setDb($db);
+        parent::__construct();
     }
 
     public function add(keySymptEntity $keySympt)
     {
-        $q = $this->getDb()->prepare('INSERT INTO keysympt(idK, idS) VALUES(:idK, :idS)');
-
-        $q->bindValue(':idK', $keySympt->getIdK(), PDO::PARAM_INT);
-        $q->bindValue(':idS', $keySympt->getIdS(), PDO::PARAM_INT);
-
-        $q->execute();
+        $sql = "INSERT INTO keysympt(`idK`, `idS`) VALUES(?, ?)";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($keySympt->getIdK(), $keySympt->getIdS()));
     }
 
     public function delete(keySymptEntity $keySympt)
     {
-        $this->getDb()->exec('DELETE FROM keysympt WHERE idK = ' . $keySympt->getIdK() . ' and idS = ' . $keySympt->getIdS());
+        $sql = "DELETE FROM keysympt WHERE idP = ? and idS = ?";
+        $stmt= $this->getDb()->prepare($sql);
+        $stmt->execute(array($keySympt->getIdP(),$keySympt->getIdS()));
     }
 
     public function get($idK, $idS)
@@ -26,10 +25,11 @@ class keySymptEntityManager extends EntityManager
         $idK = (int)$idK;
         $idS = (int)$idS;
 
-        $q = $this->getDb()->query('SELECT idK, idS FROM keysympt WHERE idK = ' . $idK . ' and idS = ' . $idS);
-        $donnees = $q->fetch(PDO::FETCH_ASSOC);
-
-        return new keySymptEntity($donnees);
+        $q = $this->getDb()->query('SELECT idK, idS FROM keysympt WHERE idK = '. $idK .' and idS = '. $idS);
+        while ($donnees = $q->fetch())
+        {
+            return new keySymptEntity($donnees['idK'], $donnees['idS']);
+        }
     }
 
     public function getList()
@@ -38,15 +38,11 @@ class keySymptEntityManager extends EntityManager
 
         $q = $this->getDb()->query('SELECT idK, idS FROM keysympt ORDER BY idK, idS');
 
-        while ($donnees = $q->fetch(PDO::FETCH_ASSOC)) {
-            $keySympts[] = new keySymptEntity($donnees);
+        while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+        {
+            $keySympts[] = keySymptEntity($donnees['idK'], $donnees['idS']);
         }
 
         return $keySympts;
-    }
-
-    public function update(keySymptEntity $keySympt)
-    {
-
     }
 }
