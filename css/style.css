@@ -13,8 +13,8 @@ body{
 }
 
 img{
-  width:10%;
-  max-width:10%;
+  width:30%;
+  max-width:50%;
 }
 
 .navbar{
@@ -30,10 +30,15 @@ img{
   color:#000;
 }
 
+
+
 .navbar li:not(:first-child):not(:last-child){
   padding-left: 3em;
   padding-right: 3em;
 }
+
+
+
 
 
 
