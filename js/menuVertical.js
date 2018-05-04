@@ -12,5 +12,8 @@ function openMenu(evt, itemMenu) {
     evt.currentTarget.className += " active";
 }
 
+
+$(document).ready(function() {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
+});

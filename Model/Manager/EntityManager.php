@@ -1,4 +1,5 @@
 <?php
+
 class EntityManager
 {
     private $_db; // Instance de PDO

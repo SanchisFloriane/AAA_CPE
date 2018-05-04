@@ -1,4 +1,6 @@
 <?php
+require '../Model/Manager/EntityManager.php';
+
 class meridienEntityManager extends EntityManager
 {
     public function __construct()

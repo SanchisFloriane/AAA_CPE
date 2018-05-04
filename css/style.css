@@ -77,7 +77,6 @@ img{
 .tabcontent {
   float: left;
   padding: 0px 12px;
-  width: 68%;
   border-left: none;
   margin-top: 10%;
   margin-left: 5%;
@@ -116,4 +115,35 @@ form.searchForm div.parameter {
   width: 33%;
   float:left;
   margin-bottom: 1rem;
+}
+
+#accueil
+{
+  margin: 10% 20%;
+  border: 1px solid #ccc;
+  width:60%;
+}
+
+#accueilRSS
+{
+  margin: 10% 20%;
+  border: 1px solid #ccc;
+  width:60%;
+}
+
+.titleRSS
+{
+  text-align: center;
+  font-weight: bold;
+}
+
+.descriptionRSS
+{
+    text-align: center;
+}
+
+.linkRss
+{
+  text-align: center;
+  text-decoration: overline;
 }
