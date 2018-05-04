@@ -84,3 +84,36 @@ img{
   margin-right: 5%;
   border: 1px solid #ccc;
 }
+
+form.searchForm {
+  margin: 1rem;
+
+}
+
+form.searchForm input[type=text]{
+  padding: 1rem;
+  font-size: 1.5rem;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+  margin-bottom: 2rem;
+}
+form.searchForm button {
+  float: right;
+  width: 20%;
+  padding: 1rem;
+  background: #2196F3;
+  color: white;
+  font-size: 1.5rem;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+form.searchForm div.parameter {
+  width: 33%;
+  float:left;
+  margin-bottom: 1rem;
+}
