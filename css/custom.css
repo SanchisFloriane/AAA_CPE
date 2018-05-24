@@ -1,0 +1,40 @@
+.row.vdivide [class*='col-']:not(:last-child):after {
+    background: #e0e0e0;
+    width: 1px;
+    content: "";
+    display:block;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    right: 0;
+    min-height: 70px;
+}
+
+html, body {
+    height: 100%;
+}
+body {
+    background-color: #e9ecef;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex-grow: 1;
+    overflow: auto;
+}
+.scrollable-menu {
+    height: auto;
+    max-height: 80vh;
+    overflow-x: hidden;
+}
+
+
+.navbar{
+    min-height: 8vh;
+}
+
+
+.searchResult:first-letter {
+    text-transform:capitalize;
+}

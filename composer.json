@@ -1,0 +1,14 @@
+{
+    "name": "cpe/aaa_cpe",
+    "description": "Projet PHP 4IRC",
+    "authors": [
+        {
+            "name": "alex",
+            "email": "alexis.picot@cpe.fr"
+        }
+    ],
+    "require": {
+        "smarty/smarty":"~3.1",
+        "bjeavons/zxcvbn-php": "^0.3"
+    }
+}
