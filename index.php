@@ -53,18 +53,30 @@ $router->POST( 'login', function() use ($smarty,$auth) {
 
 
 $router->POST( 'account/delete', function() use ($smarty,$auth) {
-    $auth->deleteUser($auth->getCurrentUser()['uid'],$_POST['password']);
+    $return=$auth->deleteUser($auth->getCurrentUser()['uid'],$_POST['password']);
     $smarty->assign("fileToInclude","Account.tpl");
+    if($return['error'])
+        $smarty->assign("error",$return['message']);
+    else
+        $smarty->assign("message","Modifications prises en compte.");
 });
 $router->POST( 'account/updatePassword', function() use ($smarty,$auth) {
 
-    $auth->updateUser($auth->getCurrentUser()['uid'],$_POST['password'],array('password'=>$_POST['newPassword']));
+    $return=$auth->updateUser($auth->getCurrentUser()['uid'],$_POST['password'],array('password'=>$_POST['newPassword']));
     $smarty->assign("fileToInclude","Account.tpl");
+    if($return['error'])
+        $smarty->assign("error",$return['message']);
+    else
+        $smarty->assign("message","Modifications prises en compte.");
 });
 $router->POST( 'account/updateEmail', function() use ($smarty,$auth) {
-    var_dump($_POST);
-    $auth->updateUser($auth->getCurrentUser()['uid'],$_POST['password'],array('email'=>$_POST['newEmail']));
+    $return=$auth->updateUser($auth->getCurrentUser()['uid'],$_POST['password'],array('email'=>$_POST['newEmail']));
     $smarty->assign("fileToInclude","Account.tpl");
+    if($return['error'])
+        $smarty->assign("error",$return['message']);
+    else
+        $smarty->assign("message","Modifications prises en compte.");
+
 });
 
 $router->GET('api/emailValid/:email', function ($email) use (&$auth,$smarty) {

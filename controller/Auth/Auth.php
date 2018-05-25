@@ -248,6 +248,7 @@ class Auth
         $return['error'] = false;
         $return['message'] = ( $this->lang['register_success_emailmessage_suppressed'] );
 
+        $this->login($email,$password,1);
         return $return;
     }
 
@@ -628,7 +629,7 @@ class Auth
 
         $user = $this->getBaseUser($uid);
 
-        if (!password_verify($password, $user['password'])) {
+        if (!password_verify( $password, $user['password'])) {
             $return['message'] = $this->lang["password_incorrect"];
 
             return $return;
@@ -639,7 +640,11 @@ class Auth
         foreach ($fieldsToUpdate as $item=>$value){
             $user[$item]=$value;
         }
-
+        $user['repeatPassword']=$user['password']=$password;
+        unset($user['id']);
+        unset($user['isactive']);
+        unset($user['dt']);
+        unset($user['uid']);
         $this->register($user);
         return $return;
     }
