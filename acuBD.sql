@@ -2504,9 +2504,9 @@ CREATE TABLE `users` (
 
 
 
-DELETE FROM keySympt  WHERE NOT EXISTS(SELECT * FROM symptome WHERE keySympt.idS=symptome.idS);
-DELETE FROM symptPatho WHERE NOT EXISTS(SELECT * FROM patho WHERE symptPatho.idP=patho.idP);
-DELETE FROM patho WHERE NOT EXISTS(SELECT * FROM meridien WHERE meridien.code=patho.mer);
+DELETE FROM keySympt    WHERE NOT EXISTS(SELECT * FROM symptome WHERE keySympt.idS=symptome.idS);
+DELETE FROM symptPatho  WHERE NOT EXISTS(SELECT * FROM patho    WHERE symptPatho.idP=patho.idP);
+DELETE FROM patho       WHERE NOT EXISTS(SELECT * FROM meridien WHERE meridien.code=patho.mer);
 
 ALTER TABLE keySympt
   ADD CONSTRAINT keySympt_keywords_idK_fk

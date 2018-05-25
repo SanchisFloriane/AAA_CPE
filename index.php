@@ -100,13 +100,9 @@ $router->GET('logout',function() use ($smarty,$auth){
 
 
 $router->GET('pathologies', function() use ($smarty) {
-    require_once "Model/pathoEntity.php";
-
-    $test = array_group_by( $GLOBALS['PDO']->query("SELECT * FROM Pathologies")->fetchAll() , "idP");
 
     $smarty->assign("fileToInclude","Pathologies.tpl");
     $smarty->assign("meridiens", (new meridienEntityManager())->getList());
-    $smarty->assign("test", $test);
     $smarty->assign("pathologies", (new pathologieEntityManager())->getList());
     $smarty->assign("typePathos", array(
         "Luo"=>"l",

@@ -1,3 +1,6 @@
+
+
+{if !(is_bool($user)&&!$user)}
 <div class="input-group">
     <input id="txtFilter" type="text" class="form-control" onkeyup="filter()"
            placeholder="Filtrer les pathologies par mots-clés (regexp)"
@@ -39,7 +42,7 @@
          <button data-type="meridien"    class="active btn btn-outline-danger"     data-toggle="button" aria-pressed="true" autocomplete="off"  type="button">Méridien</button>
      </div>*}
 </div>
-
+{/if}
 
 <table class="table">
     <thead>
