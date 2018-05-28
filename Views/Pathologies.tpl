@@ -100,16 +100,16 @@
         $("[data-motcles]").each(function () {
             $(this).toggleClass("d-none",false);
         });
-        let caracteristiques = $("#caracteristiquesToggles").children(".active").toArray().reduce((regex, current) =>  regex +'|'+ current.dataset.regex+'$', '');
-        let types = $("#typeToggles").children(".active").toArray().reduce((regex, current) =>  regex +'|'+ current.dataset.regex, '');
-        let meridiens = $("#meridienToggles").children(".active").toArray().reduce((regex, current) =>  regex +'|'+ current.dataset.regex, '');
-        let regexp = '';
+        var caracteristiques = $("#caracteristiquesToggles").children(".active").toArray().reduce((regex, current) =>  regex +'|'+ current.dataset.regex+'$', '');
+        var types = $("#typeToggles").children(".active").toArray().reduce((regex, current) =>  regex +'|'+ current.dataset.regex, '');
+        var meridiens = $("#meridienToggles").children(".active").toArray().reduce((regex, current) =>  regex +'|'+ current.dataset.regex, '');
+        var regexp = '';
             if(escapeRegExp(types).substr(1)!=="")
                 regexp+='('+escapeRegExp(types).substr(1)+')';
             regexp+='.*';
             if(escapeRegExp(caracteristiques).substr(1)!=="")
                 regexp+='('+escapeRegExp(caracteristiques).substr(1)+')';
-        let regexpMeridien = escapeRegExp(meridiens.substr(1));
+        var regexpMeridien = escapeRegExp(meridiens.substr(1));
 
         $('[data-type]:not(.d-none)').each(function () {
             $(this).parent().toggleClass("d-none",!$(this).first().data('type').match(regexp))
@@ -126,7 +126,7 @@
             if($txtFilter==="")return;
             var val = '.*'+$txtFilter+'.*';
             var match = $(this).data('motcles').match(val);
-            let hide = (match === null);
+            var hide = (match === null);
             $(this).parent().toggleClass("d-none", hide);
             if(match!==null){
                 var filter1 = $(this).data('motcles').split(',').filter(word => word.match(val));
