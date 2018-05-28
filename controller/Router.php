@@ -15,7 +15,7 @@ class Route {
 
     function __construct($path, Closure $fun,$restrict=false)
     {
-        $this->path = $path;
+        $this->path = strtoupper($path);
         $this->fun = $fun;
         $this->restrict = $restrict;
     }
@@ -153,6 +153,6 @@ class Router {
         $path = isset($_GET['page'])?$_GET['page']:'';
 
 
-        print $this->match_and_exec($method, $path);
+        print $this->match_and_exec($method, strtoupper($path));
     }
 }
