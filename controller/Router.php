@@ -118,7 +118,7 @@ class Router {
                 array_push($this->routes['GET'], new GET($path, $fun,$restrict));
                 break;
             case 'POST':
-                array_push($this->routes['POST'], new GET($path, $fun,$restrict));
+                array_push($this->routes['POST'], new POST($path, $fun,$restrict));
                 break;
             case 'PUT':
                 array_push($this->routes['PUT'], new PUT($path, $fun,$restrict));
