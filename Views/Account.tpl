@@ -42,11 +42,13 @@
         <h5 class="card-title">Supprimer mon compte</h5>
         <p class="card-text">Vous voulez faire valoir votre droit à l'oubli ?</br>Attention, cette opération est
             irréversible</p>
-        <form action="?page=account/c" method="post" xmlns="http://www.w3.org/1999/html">
+        <form action="?page=account/delete" method="post" xmlns="http://www.w3.org/1999/html">
             <input type="hidden" name="password">
-        <div class="text-right mt-2"><a href="#" class="btn btn-danger"
-                                        onclick="confirm('Etes-vous sûr de vouloir supprimer vôtre compte ? ')">Supprimer</a>
-        </div>
+
+
+            <div class="text-right mt-2">
+                <button type="submit" class="btn btn-danger" onclick="confirm('Etes-vous sûr de vouloir supprimer vôtre compte ? ')">Supprimer</button>
+            </div>
         </form>
 
 
