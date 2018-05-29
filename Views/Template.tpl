@@ -6,8 +6,9 @@
 <head>
 
     <title>{$fileToInclude|replace:'.tpl':''|ucfirst|default:'Oups ! '} - AAA</title>
-    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/custom.css"/>
+
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet"/>
 
     <meta name="google-signin-client_id" content="111824800151-gu66ltunvubke0bi8o3jhigr2l8l3p0o.apps.googleusercontent.com"/>
@@ -17,7 +18,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark " >
-    <a id="idNavBar" class="navbar-brand" href="#"><img src="img/logo.png" class="img-fluid rounded col-2 logoAccueil"></a>
+    <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -33,7 +34,7 @@
             {if !(is_bool($user)&&!$user)}
                 {foreach from=$pagesRestrict key=nom item=url}
                     <li class="nav-item active">
-                        <a class="nav-link" href="?page={$url}">{$nom} </a>
+                        <a class="nav-link text-warning" href="?page={$url}">{$nom} </a>
                     </li>
                 {/foreach}
             {/if}
@@ -50,8 +51,7 @@
                         {else}
 
                         Bonjour {$user['firstname']}
-                        <a class="btn btn-outline-light ml-3" href="?page=logout">Déconnexion
-                        </a>
+                        <a class="btn btn-outline-light ml-3" href="?page=logout">Déconnexion</a>
                     {/if}
 
 

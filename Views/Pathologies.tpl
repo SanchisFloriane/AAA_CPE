@@ -1,8 +1,11 @@
+
+
+{if !(is_bool($user)&&!$user)}
 <div class="input-group">
     <input id="txtFilter" type="text" class="form-control" onkeyup="filter()"
-           placeholder="Filtrer les pathologies (regexp)"
-           aria-label="Filtrer les pathologies (regexp)"
-           aria-describedby="basic-addon2">
+           placeholder="Filtrer les pathologies par mots-clés (regexp)"
+           aria-label="Filtrer les pathologies par mots-clés (regexp)"
+           aria-describedby="basic-addon2"/>
 
     <div class="input-group-append">
         <div class="btn-group">
@@ -39,27 +42,25 @@
          <button data-type="meridien"    class="active btn btn-outline-danger"     data-toggle="button" aria-pressed="true" autocomplete="off"  type="button">Méridien</button>
      </div>*}
 </div>
-
+{/if}
 
 <table class="table">
     <thead>
     <tr>
-        <th scope="col">Type</th>
-        <th scope="col">First</th>
-        <th scope="col">Second</th>
-        <th scope="col">Third</th>
+        <th scope="col">Méridien</th>
+        <th scope="col">Description</th>
+
     </tr>
     </thead>
     <tbody>
-    {foreach from=$pathos item=patho}
-    <tr data-meridien="{$patho->getMer()}"  onclick="$('#pathos-detail-{$patho->getIdP()}').collapse('toggle')">
-        <th class="type" scope="row">{$patho->getType()}</th>
-        <td>{$patho->getMer()}</td>
-        <td class="desc">{$patho->getDesc()}</td>
-        <td>{$patho->getIdP()}</td>
-    <tbody id="pathos-detail-{$patho->getIdP()}" class="collapse">
+    {foreach from=$pathologies item=patho}
+    <tr data-meridien="{$patho->getCodeMer()}" data-type="{$patho->getType()}" data-motcles="{$patho->getmotcles()}"  onclick="$('#pathos-detail-{$patho->getIdP()}').collapse('toggle')">
+        <td>{$patho->getNomMer()|ucfirst}</td>
+        <td class="desc">{$patho->getDesc()|ucfirst}</td>
+        <td class="searchResult"></td>
+        <tbody id="pathos-detail-{$patho->getIdP()}" class="collapse">
 
-    </tbody>
+        </tbody>
     {/foreach}
     </tbody>
 </table>
@@ -91,22 +92,27 @@
 
     });
     function escapeRegExp(str) {
-        return str.replace(/[\-\[\]\/\(\)\*\+\?\.\\\^\$]/g, "\\$&");
+        return str.replace(/[\-\[\]\/\(\)\*\+\?\.\\]/g, "\\$&");
     }
 
     function filter() {
-        const reducer = (regex, current) =>  regex +'|'+ current.dataset.regex;
-        let caracteristiques = $("#caracteristiquesToggles").children(".active").toArray().reduce(reducer, '');
-        let types = $("#typeToggles").children(".active").toArray().reduce(reducer, '');
-        let meridiens = $("#meridienToggles").children(".active").toArray().reduce(reducer, '');
-        let regexp = '';
-            regexp+=types;
-            regexp+=caracteristiques;
-            regexp=escapeRegExp(regexp).substr(1);
-        let regexpMeridien = escapeRegExp(meridiens.substr(1));
+        $("[id^='pathos-detail-']").collapse('hide');
+        $("[data-motcles]").each(function () {
+            $(this).toggleClass("d-none",false);
+        });
+        var caracteristiques = $("#caracteristiquesToggles").children(".active").toArray().reduce((regex, current) =>  regex +'|'+ current.dataset.regex+'$', '');
+        var types = $("#typeToggles").children(".active").toArray().reduce((regex, current) =>  regex +'|'+ current.dataset.regex, '');
+        var meridiens = $("#meridienToggles").children(".active").toArray().reduce((regex, current) =>  regex +'|'+ current.dataset.regex, '');
+        var regexp = '';
+            if(escapeRegExp(types).substr(1)!=="")
+                regexp+='('+escapeRegExp(types).substr(1)+')';
+            regexp+='.*';
+            if(escapeRegExp(caracteristiques).substr(1)!=="")
+                regexp+='('+escapeRegExp(caracteristiques).substr(1)+')';
+        var regexpMeridien = escapeRegExp(meridiens.substr(1));
 
-        $('.type').each(function () {
-            $(this).parent().toggleClass("d-none",!$(this).text().match(regexp))
+        $('[data-type]:not(.d-none)').each(function () {
+            $(this).parent().toggleClass("d-none",!$(this).first().data('type').match(regexp))
         });
 
         $("[data-meridien]:not(.d-none)").each(function () {
@@ -114,9 +120,19 @@
         });
 
 
-        $("[data-meridien]:not(.d-none)").children('.desc').each(function () {
-            let hide = ($(this).text().match($('#txtFilter').val()) === null);
-            $(this).parent().toggleClass("d-none", hide)
+        $("[data-motcles]:not(.d-none)").each(function () {
+            var $txtFilter = $('#txtFilter').val().trim();
+            $(this).children('.searchResult').text('');
+            if($txtFilter==="")return;
+            var val = '.*'+$txtFilter+'.*';
+            var match = $(this).data('motcles').match(val);
+            var hide = (match === null);
+            $(this).parent().toggleClass("d-none", hide);
+            if(match!==null){
+                var filter1 = $(this).data('motcles').split(',').filter(word => word.match(val));
+                $(this).children('.searchResult').text(filter1.join(', '))
+            }
+
         });
 
     }

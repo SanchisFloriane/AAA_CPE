@@ -2504,9 +2504,9 @@ CREATE TABLE `users` (
 
 
 
-DELETE FROM keySympt  WHERE NOT EXISTS(SELECT * FROM symptome WHERE keySympt.idS=symptome.idS);
-DELETE FROM symptPatho WHERE NOT EXISTS(SELECT * FROM patho WHERE symptPatho.idP=patho.idP);
-DELETE FROM patho WHERE NOT EXISTS(SELECT * FROM meridien WHERE meridien.code=patho.mer);
+DELETE FROM keySympt    WHERE NOT EXISTS(SELECT * FROM symptome WHERE keySympt.idS=symptome.idS);
+DELETE FROM symptPatho  WHERE NOT EXISTS(SELECT * FROM patho    WHERE symptPatho.idP=patho.idP);
+DELETE FROM patho       WHERE NOT EXISTS(SELECT * FROM meridien WHERE meridien.code=patho.mer);
 
 ALTER TABLE keySympt
   ADD CONSTRAINT keySympt_keywords_idK_fk
@@ -2526,3 +2526,46 @@ FOREIGN KEY (idP) REFERENCES patho (idP);
 ALTER TABLE patho
   ADD CONSTRAINT patho_meridien_code_fk
 FOREIGN KEY (mer) REFERENCES meridien (code);
+
+
+ALTER TABLE users
+    ADD COLUMN firstname varchar(20);
+ALTER TABLE users
+    ADD COLUMN lastname varchar(20);
+ALTER TABLE users
+    ADD COLUMN nickname varchar(20);
+
+
+
+create view pathologies as
+  select
+    `tbl`.`idP`                                   AS `idP`,
+    `tbl`.`desc`                                  AS `desc`,
+    `tbl`.`type`                                  AS `type`,
+    `tbl`.`element`                               AS `idMer`,
+    `tbl`.`code`                                  AS `codeMer`,
+    `tbl`.`nom`                                   AS `nomMer`,
+    `tbl`.`yin`                                   AS `yinMer`,
+    group_concat(`tbl`.`motcles` separator ',')   AS `motcles`,
+    group_concat(`tbl`.`symptomes` separator ',') AS `symptomes`
+  from (select
+          `aaa`.`patho`.`idP`                                 AS `idP`,
+          `aaa`.`patho`.`desc`                                AS `desc`,
+          `aaa`.`patho`.`type`                                AS `type`,
+          `aaa`.`meridien`.`element`                          AS `element`,
+          `aaa`.`meridien`.`nom`                              AS `nom`,
+          `aaa`.`meridien`.`code`                             AS `code`,
+          `aaa`.`meridien`.`yin`                              AS `yin`,
+          group_concat(`aaa`.`keywords`.`name` separator ',') AS `motcles`,
+          `aaa`.`symptome`.`desc`                             AS `symptomes`
+        from (((((`aaa`.`symptpatho`
+          join `aaa`.`keysympt` on ((`aaa`.`symptpatho`.`idS` = `aaa`.`keysympt`.`idS`))) join `aaa`.`keywords`
+            on ((`aaa`.`keysympt`.`idK` = `aaa`.`keywords`.`idK`))) join `aaa`.`patho`
+            on ((`aaa`.`patho`.`idP` = `aaa`.`symptpatho`.`idP`))) join `aaa`.`symptome`
+            on ((`aaa`.`symptome`.`idS` = `aaa`.`symptpatho`.`idS`))) join `aaa`.`meridien`
+            on ((`aaa`.`meridien`.`code` = `aaa`.`patho`.`mer`)))
+        group by `aaa`.`patho`.`idP`, `aaa`.`patho`.`desc`, `aaa`.`symptome`.`desc`, `aaa`.`patho`.`type`,
+          `aaa`.`meridien`.`nom`, `aaa`.`meridien`.`element`, `aaa`.`meridien`.`code`, `aaa`.`meridien`.`yin`,
+          `aaa`.`symptome`.`desc`) `tbl`
+  group by `tbl`.`idP`, `tbl`.`desc`, `tbl`.`type`, `tbl`.`element`, `tbl`.`nom`, `tbl`.`yin`;
+

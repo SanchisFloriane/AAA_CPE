@@ -1,0 +1,5 @@
+# On suit les liens symboliques
+Options +FollowSymlinks
+# Activation du mod rewrite d'Apache
+RewriteEngine On
+RewriteRule AAA_CPE/(.*) AAA_CPE/index.php?page=$1

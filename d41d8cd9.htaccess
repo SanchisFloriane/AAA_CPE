@@ -1,0 +1,2 @@
+rewriteengine on
+rewriterule "^.+.html$" /index.php

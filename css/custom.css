@@ -35,11 +35,11 @@ body {
 }
 
 
+.searchResult:first-letter {
+    text-transform: capitalize;
 .navbar-default .navbar-nav > li > a{
     color:#000;
 }
-
-
 
 .navbar li:not(:first-child):not(:last-child){
     padding-left: 3em;

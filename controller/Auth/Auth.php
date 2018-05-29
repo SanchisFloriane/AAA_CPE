@@ -248,6 +248,7 @@ class Auth
         $return['error'] = false;
         $return['message'] = ( $this->lang['register_success_emailmessage_suppressed'] );
 
+        $this->login($email,$password,1);
         return $return;
     }
 
@@ -496,7 +497,6 @@ class Auth
         $query = $this->dbh->prepare("UPDATE {$this->table_users} SET email = ?, password = ?, isactive = ? {$setParams} WHERE id = ?");
 
         $bindParams = array_values(array_merge(array($email, $password, $isactive), $params, array($uid)));
-var_dump($setParams);
 
         if (!$query->execute($bindParams)) {
             $query = $this->dbh->prepare("DELETE FROM {$this->table_users} WHERE id = ?");
@@ -604,6 +604,48 @@ var_dump($setParams);
         $return['error'] = false;
         $return['message'] = $this->lang["account_deleted"];
 
+        return $return;
+    }
+
+
+    /**
+     * Update an user
+     * @param int $uid
+     * @param string $password
+     * @return array $return
+     */
+
+    public function updateUser($uid, $password,$fieldsToUpdate=array())
+    {
+        $return['error'] = true;
+
+        $validatePassword = $this->validatePassword($password);
+
+        if ($validatePassword['error'] == 1) {
+            $return['message'] = $validatePassword['message'];
+
+            return $return;
+        }
+
+        $user = $this->getBaseUser($uid);
+
+        if (!password_verify( $password, $user['password'])) {
+            $return['message'] = $this->lang["password_incorrect"];
+
+            return $return;
+        }
+
+        $user = $this->getUser($uid);
+        $this->deleteUser($uid,$password);
+        foreach ($fieldsToUpdate as $item=>$value){
+            $user[$item]=$value;
+        }
+        $user['repeatPassword']=$user['password']=$password;
+        unset($user['id']);
+        unset($user['isactive']);
+        unset($user['dt']);
+        unset($user['uid']);
+        $this->register($user);
         return $return;
     }
 

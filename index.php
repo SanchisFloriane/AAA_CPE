@@ -13,7 +13,7 @@ foreach (glob(  'controller/EntityManager/*.php') as $file) {
     if(is_file($file))
         require_once($file);
 }
-$GLOBALS['PDO'] = new PDO('mysql:host=localhost;dbname=aaa;charset=utf8', 'root', '');
+$GLOBALS['PDO'] = new PDO('mysql:host=127.0.0.1;dbname=aaa;charset=utf8', 'root', '2539AL07m');
 $smarty = new Smarty();
 $smarty->setTemplateDir('./Views');
 
@@ -22,11 +22,11 @@ $router = new Router($auth);
 $smarty->assign("user",$auth->getCurrentUser());
 $smarty->assign("date",time());
 
-
 $smarty->assign("pages",array("Accueil"=>"","Pathologies"=>"pathologies","Ressources"=>"ressources"));
-$smarty->assign("pagesRestrict",array("QuePourLesCo"=>""));
+$smarty->assign("pagesRestrict",array("Mon compte"=>"account"));
 
-$router->GET( '', function() use ($smarty) { $smarty->assign("fileToInclude","Accueil.tpl"); });
+$router->GET( '', function() use ($smarty) { $smarty->assign("fileToInclude","Home.tpl"); });
+
 
 
 
@@ -47,7 +47,41 @@ $router->POST( 'login', function() use ($smarty,$auth) {
     else
         $smarty->assign("message","Vous êtes désormais connecté");
     $smarty->assign("user",$auth->getCurrentUser());
-    $smarty->assign("fileToInclude","Accueil.tpl");
+    $smarty->assign("fileToInclude","Home.tpl");
+});
+
+
+
+$router->POST( 'account/delete', function() use ($smarty,$auth) {
+    $return=$auth->deleteUser($auth->getCurrentUser()['uid'],$_POST['password']);
+
+    if($return['error']) {
+        $smarty->assign("fileToInclude","Account.tpl");
+        $smarty->assign("error", $return['message']);
+    }
+    else {
+        $smarty->assign("fileToInclude","Home.tpl");
+        $smarty->assign("user",null);
+        $smarty->assign("message", "Modifications prises en compte.");
+    }
+});
+$router->POST( 'account/updatePassword', function() use ($smarty,$auth) {
+
+    $return=$auth->updateUser($auth->getCurrentUser()['uid'],$_POST['password'],array('password'=>$_POST['newPassword']));
+    $smarty->assign("fileToInclude","Account.tpl");
+    if($return['error'])
+        $smarty->assign("error",$return['message']);
+    else
+        $smarty->assign("message","Modifications prises en compte.");
+});
+$router->POST( 'account/updateEmail', function() use ($smarty,$auth) {
+    $return=$auth->updateUser($auth->getCurrentUser()['uid'],$_POST['password'],array('email'=>$_POST['newEmail']));
+    $smarty->assign("fileToInclude","Account.tpl");
+    if($return['error'])
+        $smarty->assign("error",$return['message']);
+    else
+        $smarty->assign("message","Modifications prises en compte.");
+
 });
 
 $router->GET('api/emailValid/:email', function ($email) use (&$auth,$smarty) {
@@ -65,33 +99,26 @@ $router->GET('api/emailValid/:email', function ($email) use (&$auth,$smarty) {
 $router->GET('logout',function() use ($smarty,$auth){
 
     $auth->logout($auth->getSessionHash());
-    $smarty->assign("fileToInclude","Accueil.tpl");
+    $smarty->assign("fileToInclude","Home.tpl");
     $smarty->assign("user",false);
 },true);
 
 
 $router->GET('pathologies', function() use ($smarty) {
-    require_once "Model/pathoEntity.php";
-
-
-
-
-
-    $test = array_group_by( $GLOBALS['PDO']->query("SELECT * FROM Pathologies")->fetchAll() , "idP");
 
     $smarty->assign("fileToInclude","Pathologies.tpl");
     $smarty->assign("meridiens", (new meridienEntityManager())->getList());
-    $smarty->assign("test", $test);
-    $smarty->assign("pathos", (new pathoEntityManager())->getList());
+    $smarty->assign("pathologies", (new pathologieEntityManager())->getList());
     $smarty->assign("typePathos", array(
         "Luo"=>"l",
         "Grand Luo"=>"l2",
         "Jing Jin"=>"j",
         "Méridien"=>"m",
         "Merveilleux vaisseaux"=>"mv",
-        "Organe / Viscère"=>"t",
+        "Organe / Viscère"=>"tf",
     ));
-    $smarty->assign("caracteristiquesPathos", array("Plein"=>"p",
+    $smarty->assign("caracteristiquesPathos", array(
+        "Plein"=>"p",
         "Chaud"=>"c",
         "Vide"=>"v",
         "Froid"=>"f",
@@ -101,6 +128,7 @@ $router->GET('pathologies', function() use ($smarty) {
 });
 
 $router->GET('pathologie/:id', function ($id) use (&$auth,$smarty) {
+    $smarty->assign("patho", (new pathologieEntityManager())->get($id));
     echo $smarty->fetch("DetailPathologie.tpl");
     die();
 });

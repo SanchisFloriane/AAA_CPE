@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail">Adresse électronique (vérfié avec un WS)</label>
+                        <label for="inputEmail">Adresse électronique (vérifié avec un WS)</label>
                         <div class="input-group" id="inputEmailGroup">
                             <input type="email" class="form-control" name="email" id="inputEmail"
                                    placeholder="Adresse électronique"
