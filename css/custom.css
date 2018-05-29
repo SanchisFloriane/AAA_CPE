@@ -37,6 +37,8 @@ body {
 
 .searchResult:first-letter {
     text-transform: capitalize;
+}
+
 .navbar-default .navbar-nav > li > a{
     color:#000;
 }
