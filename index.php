@@ -150,4 +150,4 @@ try {
     $smarty->display("Template.tpl");
 }
 
-
+?>
