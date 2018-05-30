@@ -9,13 +9,13 @@
     <h3>Auteurs</h3>
     <br>
     <ul>
-        <li>Sanchis Floriane</li>
-        <li>Picot Alexis</li>
-        <li>Dumas Tanguy</li>
-        <li>Dépasse Sébastien</li>
-        <li>De Paoli Benoit</li>
-        <li>Lepine Flavien</li>
-        <li>Pracca Basile</li>
+        <li>SANCHIS Floriane</li>
+        <li>PICOT Alexis</li>
+        <li>DUMAS Tanguy</li>
+        <li>DEPASSE Sébastien</li>
+        <li>DE PAOLI Benoit</li>
+        <li>LEPINE Flavien</li>
+        <li>PRACCA Basile</li>
     </ul>
 </div>
 
