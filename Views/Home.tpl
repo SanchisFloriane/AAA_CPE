@@ -10,7 +10,7 @@
                 <li>2. De pouvoir n’afficher que certaines des pathologies en fonction de différents critères (type de
                     pathologie, choix des méridiens, etc.(voir la table 7.2).</li>
                 <li>3. De rechercher les pathologies comportant certains symptômes.</li>
-                <li>4. De reçevoir le flux RSS de Google concernant l'actualité sur le mot : pathologie.</li>
+                <li>4. De recevoir le flux RSS de Google concernant l'actualité sur le mot : acupuncture</li>
             </ul>
         </div>
         <img src="img/logo.png" class="img-fluid rounded col-2 logoAccueil" alt="logo LI CHINZEN">
@@ -26,7 +26,7 @@
 
 
 <script type="text/javascript">
-    var url = "https://news.google.com/news/rss/search/section/q/m%C3%A9decine?hl=fr&gl=FR&ned=fr"; //feed url
+    var url = "https://news.google.com/news/rss/search/section/q/acupuncture?hl=fr&gl=FR&ned=fr"; //feed url
 var xhr = createCORSRequest("GET","https://api.rss2json.com/v1/api.json?rss_url="+url);
 if (!xhr) {
   throw new Error('CORS not supported');
