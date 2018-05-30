@@ -15,7 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark " >
-    <a id="idNavBar" class="navbar-brand" href="#"><img src="img/logo.png" class="img-fluid rounded col-2 logoAccueil" alt="logo LI CHINZEN"></a>
+    <a id="idNavBar" class="navbar-brand" href="#">LI CHIN'ZEN</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

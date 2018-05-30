@@ -13,6 +13,7 @@ foreach (glob(  'controller/EntityManager/*.php') as $file) {
     if(is_file($file))
         require_once($file);
 }
+//$GLOBALS['PDO'] = new PDO('mysql:host=127.0.0.1;dbname=aaa;charset=utf8', 'root', '2539AL07m');
 $GLOBALS['PDO'] = new PDO('mysql:host=db;dbname=aaa;charset=utf8', 'useraaa', 'useraaa');
 $smarty = new Smarty();
 $smarty->setTemplateDir('./Views');

@@ -43,7 +43,7 @@ body {
     color:#000;
 }
 
-.navbar li:not(:first-child):not(:last-child){
+.navbar li{
     padding-left: 3em;
     padding-right: 3em;
 }

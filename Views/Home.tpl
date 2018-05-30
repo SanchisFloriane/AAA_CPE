@@ -1,5 +1,5 @@
 <div class="jumbotron bg-light pt-2 pb-2">
-    <h1 id="titleAccueil" class="align-self-center display-4 col">Bienvenue sur le site LI CHIZEN</h1>
+    <h1 id="titleAccueil" class="align-self-center display-4 col">Bienvenue sur le site LI CHIN'ZEN</h1>
     <hr class="my-4">
     <div class="d-flex p-2 row">
         <div class="align-self-center col">
@@ -17,13 +17,53 @@
     </div>
     <hr class="my-4">
 
-    <div id="rssOutput" class="d-flex p-2 row">
-        <p class="titleRSS"></p>
+      <div id="rssOutput" class="d-flex p-2 row">
+        <h2 id="titleRSS"></h2>
         <br>
-        <p class="descriptionRSS"></p>
+        <p id="descriptionRSS"></p>
         <br>
     </div>
 
-    <script src="js/fluxRss.js"></script>
 
+<script type="text/javascript">
+    var url = "https://news.google.com/news/rss/search/section/q/m%C3%A9decine?hl=fr&gl=FR&ned=fr"; //feed url
+var xhr = createCORSRequest("GET","https://api.rss2json.com/v1/api.json?rss_url="+url);
+if (!xhr) {
+  throw new Error('CORS not supported');
+} else {
+    xhr.send();
+}
+xhr.onreadystatechange = function() {
+    if (xhr.readyState==4 && xhr.status==200) {
+        var responseText = xhr.responseText;
+        var result = JSON.parse(responseText);
+
+var i =0;
+        setInterval(function(){
+            var e= result.items[i];
+            $('#titleRSS').html(e.title);
+            $('#descriptionRSS').html(e.description);
+            i++;
+            if(result.items.indexOf(e)===result.items.length)
+                i=0;
+
+        }
+            , 3000);
+
+       
+    }
+}
+function createCORSRequest(method, url) {
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr) {
+        xhr.open(method, url, true);
+    } else if (typeof XDomainRequest != "undefined") {
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+    } else {
+        xhr = null;
+    }
+    return xhr;
+}
+</script>
 </div>
