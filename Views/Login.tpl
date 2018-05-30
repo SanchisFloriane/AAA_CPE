@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="fr" >
+  <head>
+    <title>Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+<body> 
 <script src="js/zxcvbn.js"></script>
 <div class="row mb-2 flex-row">
     <div class="col-sm-6 d-flex align-items-stretch">
@@ -11,7 +18,7 @@
                     <li class="list-group-item">
 
                         <h5 class="card-title">Connexion</h5>
-                        <form method="post" action="?page=login" method="post">
+                        <form method="post" action="?page=login" >
                             <div class="form-group">
                                 <label for="connexion:inputEmail">Adresse électronique</label>
                                 <input type="email" class="form-control" name="email" id="connexion:inputEmail"
@@ -131,7 +138,7 @@
                             pas
                         </small>
                     </div>
-                    <script type="text/javascript">
+                    <script>
 
                         var strength = {
                             0: "text-danger fas fa-times",
@@ -195,3 +202,5 @@
         </div>
     </div>
 </div>
+
+</body>

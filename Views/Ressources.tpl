@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="fr" >
+  <head>
+    <title>Ressources</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+<body> 
 <div class="tab">
     <button class="tablinks" onclick="openMenu(event, 'Auteurs')" id="defaultOpen">Auteurs</button>
     <button class="tablinks" onclick="openMenu(event, 'Bibliographie')">Bibliographie</button>
@@ -35,7 +42,6 @@
             <li>https://stackoverflow.com/</li>
             <li>https://www.docker.com/</li>
         </ul>
-    </p>
 </div>
 
 <div id="Webographie" class="tabcontent jumbotron bg-light pt-2 pb-2">
@@ -49,7 +55,6 @@
             <li>https://www.wanadev.fr/23-tuto-docker-comprendre-docker-partie1/</li>
             <li>https://www.w3schools.com/pHP/default.asp</li>
         </ul>
-    </p>
 </div>
 
 <script>

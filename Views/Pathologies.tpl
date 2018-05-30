@@ -1,4 +1,10 @@
-
+<!DOCTYPE html>
+<html lang="fr" >
+  <head>
+    <title>Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+<body>
 
 {if !(is_bool($user)&&!$user)}
 <div class="input-group">
@@ -37,9 +43,9 @@
     </div>
     {* <div id="filterType" class="input-group-append">
 
-         <button data-type="plein"       class="active btn btn-outline-primary"    data-toggle="button" aria-pressed="true" autocomplete="off"  type="button">Plein</button>
-         <button data-type="poumon"      class="active btn btn-outline-success"    data-toggle="button" aria-pressed="true" autocomplete="off"  type="button">Poumon</button>
-         <button data-type="meridien"    class="active btn btn-outline-danger"     data-toggle="button" aria-pressed="true" autocomplete="off"  type="button">Méridien</button>
+         <button data-type="plein"       class="active btn btn-outline-primary"    data-toggle="button" aria-pressed="true"  type="button">Plein</button>
+         <button data-type="poumon"      class="active btn btn-outline-success"    data-toggle="button" aria-pressed="true"  type="button">Poumon</button>
+         <button data-type="meridien"    class="active btn btn-outline-danger"     data-toggle="button" aria-pressed="true"  type="button">Méridien</button>
      </div>*}
 </div>
 {/if}

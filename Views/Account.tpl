@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html lang="fr" >
+  <head>
+    <title>Account</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
 <div class="card">
     <div class="card-header">
         Gestion de mon compte
@@ -12,10 +18,10 @@
 
         <h5 class="card-title">Changer mon adresse éléctronique </h5>
         <p class="card-text">Vous souhaitez être contacté depuis une autre adresse ?</p>
-        <form action="?page=account/updateEmail" method="post" xmlns="http://www.w3.org/1999/html">
+        <form action="?page=account/updateEmail" method="post" xmlns="http://www.w3.org/1999/xhtml">
             <input type="hidden" name="password">
             <input placeholder="Saisissez une adresse éléctronique valide" type="text" name="newEmail"
-                   class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                   class="form-control">
             <div class="text-right mt-2">
                 <button type="submit" class="btn btn-primary">Valider</button>
             </div>
@@ -25,12 +31,10 @@
 
         <h5 class="card-title">Changer mon mot de passe</h5>
         <p class="card-text">Vous souhaitez changer votre mot de passe ?</p>
-        <form action="?page=account/updatePassword" method="post" xmlns="http://www.w3.org/1999/html">
+        <form action="?page=account/updatePassword" method="post" xmlns="http://www.w3.org/1999/xhtml">
             <input type="hidden" name="password">
-        <input placeholder="Saisissez un mot de passe" name="newPassword" type="password" class="form-control"
-               id="basic-url" aria-describedby="basic-addon3">
-        <input placeholder="Répétez le mot de passe" name="newPasswordRepeat" type="password" class="form-control"
-               id="basic-url" aria-describedby="basic-addon3">
+        <input placeholder="Saisissez un mot de passe" name="newPassword" type="password" class="form-control">
+        <input placeholder="Répétez le mot de passe" name="newPasswordRepeat" type="password" class="form-control">
 
 
         <div class="text-right mt-2">
@@ -40,9 +44,9 @@
         <hr class="my-4">
 
         <h5 class="card-title">Supprimer mon compte</h5>
-        <p class="card-text">Vous voulez faire valoir votre droit à l'oubli ?</br>Attention, cette opération est
+        <p class="card-text">Vous voulez faire valoir votre droit à l'oubli ? Attention, cette opération est
             irréversible</p>
-        <form action="?page=account/delete" method="post" xmlns="http://www.w3.org/1999/html">
+        <form action="?page=account/delete" method="post" xmlns="http://www.w3.org/1999/xhtml">
             <input type="hidden" name="password">
 
 

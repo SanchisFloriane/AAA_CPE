@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="fr" >
+  <head>
+    <title>Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+
 <div class="jumbotron bg-light pt-2 pb-2">
     <h1 id="titleAccueil" class="align-self-center display-4 col">Bienvenue sur le site LI CHIZEN</h1>
     <hr class="my-4">
@@ -12,14 +19,13 @@
                 <li>3. De rechercher les pathologies comportant certains symptômes.</li>
                 <li>4. De reçevoir le flux rss de google concernant l'actualité sur le mot : pathologie.</li>
             </ul>
-            </p>
         </div>
-        <img src="img/logo.png" class="img-fluid rounded col-2 logoAccueil">
+        <img src="img/logo.png" class="img-fluid rounded col-2 logoAccueil" alt='Logo LI CHINZEN'>
     </div>
     <hr class="my-4">
 
     <div id="rssOutput" class="d-flex p-2 row">
-        <h2 class="titleRSS"></h2>
+        <p class="titleRSS"></p>
         <br>
         <p class="descriptionRSS"></p>
         <br>
