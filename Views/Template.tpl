@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr" >
-  <head>
-    <title>Template</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
 
     <title>{$fileToInclude|replace:'.tpl':''|ucfirst|default:'Oups ! '} - AAA</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
@@ -17,14 +15,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark " >
-    <a id="idNavBar" class="navbar-brand" href="#"><img src="img/logo.png" class="img-fluid rounded col-2 logoAccueil"></a>
+    <a id="idNavBar" class="navbar-brand" href="#"><img src="img/logo.png" class="img-fluid rounded col-2 logoAccueil" alt="logo LI CHINZEN"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto ml-auto">
             {foreach from=$pages key=nom item=url}
                 <li class="nav-item active">
                     <a class="nav-link" href="?page={$url}">{$nom} </a>
@@ -60,17 +58,15 @@
         </div>
     </div>
 </nav>
-</head>
-<body>
 <div id="content" class="container p-3 _full ">
     {if isset($error)}
     <div class="alert alert-danger" role="alert">
-        <strong>Oh Merde !</strong> {$error}
+        <strong>Error</strong> {$error}
     </div>
     {/if}
     {if isset($message)}
         <div class="alert alert-success" role="alert">
-            <strong>Niquel !</strong> {$message}
+            <strong>Success</strong> {$message}
         </div>
     {/if}
     {if isset($fileToInclude)}

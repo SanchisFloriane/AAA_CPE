@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr" >
-  <head>
-    <title>Login</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-<body> 
 <script src="js/zxcvbn.js"></script>
 <div class="row mb-2 flex-row">
     <div class="col-sm-6 d-flex align-items-stretch">
@@ -202,5 +195,3 @@
         </div>
     </div>
 </div>
-
-</body>

@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr" >
-  <head>
-    <title>Ressources</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-<body> 
 <div class="tab">
     <button class="tablinks" onclick="openMenu(event, 'Auteurs')" id="defaultOpen">Auteurs</button>
     <button class="tablinks" onclick="openMenu(event, 'Bibliographie')">Bibliographie</button>
@@ -37,10 +30,10 @@
     <br>
     <p>Voici les sources que l'on a utilisées :
         <ul>
-            <li>https://www.smarty.net/docsv2/fr/</li>
-            <li>http://php.net/</li>
-            <li>https://stackoverflow.com/</li>
-            <li>https://www.docker.com/</li>
+            <li><a href = "https://www.smarty.net/docsv2/fr/">https://www.smarty.net/docsv2/fr/</a></li>
+            <li><a href = "http://php.net/">http://php.net/</a></li>
+            <li><a href = "https://stackoverflow.com/">https://stackoverflow.com/</a></li>
+            <li><a href = "https://www.docker.com/">https://www.docker.com/</a></li>
         </ul>
 </div>
 
@@ -49,11 +42,11 @@
     <br>
     <p>Voici la webographie utilisée :
         <ul>
-            <li>https://github.com/dropbox/zxcvbn/blob/master/README.md</li>
-            <li>https://www.siteground.com/tutorials/phpmyadmin/query/</li>
-            <li>https://openclassrooms.com/courses/un-moteur-de-template-smarty</li>
-            <li>https://www.wanadev.fr/23-tuto-docker-comprendre-docker-partie1/</li>
-            <li>https://www.w3schools.com/pHP/default.asp</li>
+            <li><a href ="https://github.com/dropbox/zxcvbn/blob/master/README.md">https://github.com/dropbox/zxcvbn/blob/master/README.md</a></li>
+            <li><a href ="https://www.siteground.com/tutorials/phpmyadmin/query/">https://www.siteground.com/tutorials/phpmyadmin/query/</a></li>
+            <li><a href ="https://openclassrooms.com/courses/un-moteur-de-template-smarty">https://openclassrooms.com/courses/un-moteur-de-template-smarty</a></li>
+            <li><a href ="https://www.wanadev.fr/23-tuto-docker-comprendre-docker-partie1/">https://www.wanadev.fr/23-tuto-docker-comprendre-docker-partie1/</a></li>
+            <li><a href ="https://www.w3schools.com/pHP/default.asp">https://www.w3schools.com/pHP/default.asp</a></li>
         </ul>
 </div>
 
